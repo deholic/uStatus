@@ -97,7 +97,7 @@ namespace uStatus
                     StringBuilder sb = new StringBuilder();
 
                     HttpWebRequest request =
-                        (HttpWebRequest)WebRequest.Create("http://tln.kr/?mode=shorten&link=http://youtu.be/results?search_query=" + iTunes.CurrentTrack.Artist + " " + iTunes.CurrentTrack.Name);
+                        (HttpWebRequest)WebRequest.Create("http://tln.kr/?mode=shorten&link=http://youtube.com/results?search_query=" + iTunes.CurrentTrack.Artist + " " + iTunes.CurrentTrack.Name);
                     HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                     Stream resStream = response.GetResponseStream();
 
@@ -114,7 +114,7 @@ namespace uStatus
                         }
                     } while (count > 0);
 
-                    nowplaying += " YouTube : " + shorten;
+                    nowplaying += " @ YouTube " + shorten;
                 }
 
                 return nowplaying;

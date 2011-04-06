@@ -140,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="information_128.ico" />
+    <None Include="README" />
     <None Include="Resources\bg_title_right.png" />
     <None Include="Resources\bg_title_left.png" />
   </ItemGroup>

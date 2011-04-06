@@ -77,7 +77,6 @@
             this.lSongInfo.Name = "lSongInfo";
             this.lSongInfo.Size = new System.Drawing.Size(324, 40);
             this.lSongInfo.TabIndex = 1;
-            this.lSongInfo.Text = "label2";
             // 
             // label1
             // 
