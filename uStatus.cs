@@ -68,6 +68,7 @@ namespace uStatus
                     }
 
                     bPlay.Text = "■";
+                    bCopy.Enabled = true;
 
                     GC.Collect();
                 }
@@ -76,6 +77,7 @@ namespace uStatus
                     lArtist.Text = "iTunes is";
                     lTitle.Text = "Now Stopped";
                     bPlay.Text = "▶";
+                    bCopy.Enabled = false;
                     pProgressBar.Width = 0;
                 }
             }
