@@ -118,7 +118,7 @@
             this.bPlay.Name = "bPlay";
             this.bPlay.Size = new System.Drawing.Size(25, 25);
             this.bPlay.TabIndex = 1;
-            this.bPlay.Text = "▶";
+            this.bPlay.Text = "■";
             this.bPlay.UseVisualStyleBackColor = true;
             this.bPlay.Click += new System.EventHandler(this.bPlay_Click);
             // 

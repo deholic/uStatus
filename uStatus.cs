@@ -24,7 +24,7 @@ namespace uStatus
             iTunes = new iTunesApp();
             if (CheckPlayingState())
             {
-                bPlay.Text = "||";
+                bPlay.Text = "■";
             }
 
             this.TopMost = Properties.Settings.Default.LastWindowTopMost;
@@ -66,6 +66,9 @@ namespace uStatus
                         lTitle.Location = new Point(7, 25);
                         tiRatioView.Stop();
                     }
+
+                    bPlay.Text = "■";
+
                     GC.Collect();
                 }
                 else
@@ -93,28 +96,39 @@ namespace uStatus
 
                 if (cbAddYoutube.Checked)
                 {
-                    byte[] buf = new byte[4096];
-                    StringBuilder sb = new StringBuilder();
-
-                    HttpWebRequest request =
-                        (HttpWebRequest)WebRequest.Create("http://tln.kr/?mode=shorten&link=http://youtube.com/results?search_query=" + iTunes.CurrentTrack.Artist + " " + iTunes.CurrentTrack.Name);
-                    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                    Stream resStream = response.GetResponseStream();
-
-                    int count = 0;
-                    string shorten = null;
-
-                    do
+                    try
                     {
-                        count = resStream.Read(buf, 0, buf.Length);
-                        if (count != 0)
-                        {
-                            shorten = Encoding.UTF8.GetString(buf, 0, count);
-                            sb.Append(shorten);
-                        }
-                    } while (count > 0);
 
-                    nowplaying += " @ YouTube " + shorten;
+                        byte[] buf = new byte[4096];
+                        StringBuilder sb = new StringBuilder();
+
+                        HttpWebRequest request =
+                            (HttpWebRequest)WebRequest.Create("http://tln.kr/?mode=shorten&link=http://youtube.com/results?search_query=" + iTunes.CurrentTrack.Artist + " " + iTunes.CurrentTrack.Name);
+                        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                        Stream resStream = response.GetResponseStream();
+
+                        int count = 0;
+                        string shorten = null;
+
+                        do
+                        {
+                            count = resStream.Read(buf, 0, buf.Length);
+                            if (count != 0)
+                            {
+                                shorten = Encoding.UTF8.GetString(buf, 0, count);
+                                sb.Append(shorten);
+                            }
+                        } while (count > 0);
+
+                        nowplaying += " @ YouTube " + shorten;
+                    }
+                    catch (WebException)
+                    {
+                        MessageBox.Show(
+                            "YouTube 주소 추가중에 문제가 발생하였습니다.\n주소를 제외한 내용만 작성됩니다.", 
+                            "알림", MessageBoxButtons.OK, MessageBoxIcon.Information
+                        );
+                    }
                 }
 
                 return nowplaying;
@@ -127,7 +141,7 @@ namespace uStatus
             if (!CheckPlayingState())
             {
                 iTunes.Play();
-                bPlay.Text = "||";
+                bPlay.Text = "■";
             }
             else
             {
