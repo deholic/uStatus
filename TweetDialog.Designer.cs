@@ -130,6 +130,7 @@
             this.tbCustomMessage.Name = "tbCustomMessage";
             this.tbCustomMessage.Size = new System.Drawing.Size(230, 50);
             this.tbCustomMessage.TabIndex = 1;
+            this.tbCustomMessage.Text = "# ";
             this.tbCustomMessage.TextChanged += new System.EventHandler(this.tbCustomMessage_TextChanged);
             // 
             // label3

@@ -30,11 +30,11 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(uStatus));
-            this.tiCheckStatus = new System.Windows.Forms.Timer(this.components);
-            this.tiRatioView = new System.Windows.Forms.Timer(this.components);
+            this.tiProgressbar = new System.Windows.Forms.Timer(this.components);
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.cbStarPoint = new System.Windows.Forms.ComboBox();
             this.bPlay = new System.Windows.Forms.Button();
             this.cbAddYoutube = new System.Windows.Forms.CheckBox();
             this.bCopy = new System.Windows.Forms.Button();
@@ -54,14 +54,9 @@
             this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
-            // tiCheckStatus
+            // tiProgressbar
             // 
-            this.tiCheckStatus.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // tiRatioView
-            // 
-            this.tiRatioView.Interval = 50;
-            this.tiRatioView.Tick += new System.EventHandler(this.tiRatioView_Tick);
+            this.tiProgressbar.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // tableLayoutPanel1
             // 
@@ -100,6 +95,7 @@
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackgroundImage = global::uStatus.Properties.Resources.bg;
+            this.panel1.Controls.Add(this.cbStarPoint);
             this.panel1.Controls.Add(this.bPlay);
             this.panel1.Controls.Add(this.cbAddYoutube);
             this.panel1.Controls.Add(this.bCopy);
@@ -110,6 +106,26 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(344, 50);
             this.panel1.TabIndex = 1;
+            // 
+            // cbStarPoint
+            // 
+            this.cbStarPoint.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbStarPoint.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbStarPoint.DropDownWidth = 71;
+            this.cbStarPoint.Font = new System.Drawing.Font("Malgun Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.cbStarPoint.FormattingEnabled = true;
+            this.cbStarPoint.Items.AddRange(new object[] {
+            "0☆",
+            "1★",
+            "2★★",
+            "3★★★",
+            "4★★★★",
+            "5★★★★★"});
+            this.cbStarPoint.Location = new System.Drawing.Point(227, 14);
+            this.cbStarPoint.Name = "cbStarPoint";
+            this.cbStarPoint.Size = new System.Drawing.Size(43, 23);
+            this.cbStarPoint.TabIndex = 3;
+            this.cbStarPoint.SelectionChangeCommitted += new System.EventHandler(this.cbStarPoint_SelectionChangeCommitted);
             // 
             // bPlay
             // 
@@ -274,8 +290,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Timer tiCheckStatus;
-        private System.Windows.Forms.Timer tiRatioView;
+        private System.Windows.Forms.Timer tiProgressbar;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Panel panel1;
@@ -291,6 +306,7 @@
         private System.Windows.Forms.Label lTitle;
         private System.Windows.Forms.Label lArtist;
         private System.Windows.Forms.Panel pProgressBg;
+        private System.Windows.Forms.ComboBox cbStarPoint;
     }
 }
 

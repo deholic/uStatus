@@ -71,6 +71,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="uSMusicData.cs" />
     <Compile Include="uStatus.cs">
       <SubType>Form</SubType>
     </Compile>

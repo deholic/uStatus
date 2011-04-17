@@ -4,6 +4,7 @@ using System.Text;
 using System.IO;
 using System.Net;
 using System.Windows.Forms;
+using System.Threading;
 using iTunesLib;
 
 namespace uStatus
@@ -13,6 +14,7 @@ namespace uStatus
         private const int STUFF_FLOW_SIZE = 335;
         private iTunesApp iTunes;
         private bool RightLeft = true;
+        private uSMusic iTunesData;
 
         public uStatus()
         {
@@ -21,6 +23,8 @@ namespace uStatus
 
         private void FirstLoad()
         {
+            #region before v1.2
+            /*
             iTunes = new iTunesApp();
             if (CheckPlayingState())
             {
@@ -35,42 +39,35 @@ namespace uStatus
                 this.StartPosition = FormStartPosition.Manual;
                 this.Location = new Point(Properties.Settings.Default.LastWindowPointX, Properties.Settings.Default.LastWindowPointY);                
             }
+            */
+            #endregion
+
+            iTunesData = new uSMusic();
+            iTunesData.StateChanged += RefreshInfo;
+            iTunesData.CrawlStart();
         }
-        private bool CheckPlayingState()
-        {
-            if (iTunes.PlayerState == ITPlayerState.ITPlayerStateStopped)
-                return false;
-            else
-                return true;
-        }
-        private void RefreshInfo()
+        
+        private void RefreshInfo(object sender, EventArgs e)
         {
             try
             {
-                if (CheckPlayingState())
+                if (iTunesData.CheckPlayingState())
                 {
+                    #region old codes
+                    /*
                     // 기본 정보 표시를 위한 설정
                     lArtist.Text = iTunes.CurrentTrack.Artist;
                     lTitle.Text = iTunes.CurrentTrack.Name;
-
-                    // Progress Bar 표시
-                    pProgressBar.Width = (int)(((double)pProgressBg.Width / (double)iTunes.CurrentTrack.Duration) * iTunes.PlayerPosition);
-
-                    // 곡 제목이 넘쳤을 경우에 흘러가는 효과 주긔
-                    if (lTitle.Width > STUFF_FLOW_SIZE)
-                    {
-                        //tiRatioView.Start();
-                    }
-                    else
-                    {
-                        lTitle.Location = new Point(7, 25);
-                        tiRatioView.Stop();
-                    }
-
+                    cbStarPoint.SelectedIndex = iTunes.CurrentTrack.Rating;
+                    */
+                    #endregion
+                    
+                    this.Invoke(new MethodInvoker(() => lArtist.Text = iTunesData.TrackArtist));
+                    this.Invoke(new MethodInvoker(() => lTitle.Text = iTunesData.TrackTitle));
+                    this.Invoke(new MethodInvoker(() => cbStarPoint.SelectedIndex = iTunesData.TrackRating / 20));
+                    
                     bPlay.Text = "■";
                     bCopy.Enabled = true;
-
-                    GC.Collect();
                 }
                 else
                 {
@@ -85,9 +82,10 @@ namespace uStatus
             {
             }
         }
+        /*
         private string CreateNowPlayingString()
         {
-            if (iTunes.PlayerState == ITPlayerState.ITPlayerStatePlaying)
+            if (iTunesData. == ITPlayerState.ITPlayerStatePlaying)
             {
                 string nowplaying = "";
 
@@ -139,36 +137,27 @@ namespace uStatus
             }
             return null;
         }
-
+        */
         private void bPlay_Click(object sender, EventArgs e)
         {
-            if (!CheckPlayingState())
+            if (!iTunesData.CheckPlayingState())
             {
-                iTunes.Play();
+                iTunesData.CrawlStart();
                 bPlay.Text = "■";
             }
             else
             {
-                iTunes.Pause();
+                iTunesData.CrawlStop();
                 bPlay.Text = "▶";
             }
         }
         private void bNextSong_Click(object sender, EventArgs e)
         {
-            iTunes.NextTrack();
+            iTunesData.NextTrack();
         }
         private void bPrevSong_Click(object sender, EventArgs e)
         {
-            iTunes.PreviousTrack();
-        }
-        private void bCopy_Click(object sender, EventArgs e)
-        {
-            string clip = null;
-            if ((clip = CreateNowPlayingString()) != null)
-            {
-                Clipboard.SetText(CreateNowPlayingString());
-                MessageBox.Show("클립보드에 #nowplaying 정보가 복사 되었습니다!", "성공!");
-            }
+            iTunesData.PrevTrack();
         }
         private void cbAlwaysTop_CheckedChanged(object sender, EventArgs e)
         {
@@ -179,8 +168,9 @@ namespace uStatus
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
-            RefreshInfo();
+            pProgressBar.Width = (int)(((double)pProgressBg.Width / (double)iTunesData.TrackLength) * iTunesData.TrackCurrent);
         }
+        /*
         private void tiRatioView_Tick(object sender, EventArgs e)
         {
             if (lTitle.Width > STUFF_FLOW_SIZE)
@@ -197,13 +187,15 @@ namespace uStatus
             }
             else return;
         }
+        */
         private void iTunesTwit_Load(object sender, EventArgs e)
         {
             FirstLoad();
-            tiCheckStatus.Start();
+            tiProgressbar.Start();
         }
         private void iTunesTwit_FormClosing(object sender, FormClosingEventArgs e)
         {
+            iTunesData.CrawlStop();
             Point currentPoint = this.Location;
             Properties.Settings.Default.LastWindowPointX = currentPoint.X;
             Properties.Settings.Default.LastWindowPointY = currentPoint.Y;
@@ -219,8 +211,13 @@ namespace uStatus
         }
         private void bCopy_Click_1(object sender, EventArgs e)
         {
-            TweetDialog td = new TweetDialog(CreateNowPlayingString());
+            TweetDialog td = new TweetDialog(iTunesData.CreateNowPlayingString(cbAddYoutube.Checked));
             td.ShowDialog();
+        }
+
+        private void cbStarPoint_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            iTunesData.TrackRating = cbStarPoint.SelectedIndex;
         }
     }
 }
