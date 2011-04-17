@@ -71,6 +71,7 @@
             // 
             // lSongInfo
             // 
+            this.lSongInfo.AutoEllipsis = true;
             this.lSongInfo.ForeColor = System.Drawing.Color.White;
             this.lSongInfo.Location = new System.Drawing.Point(5, 34);
             this.lSongInfo.Margin = new System.Windows.Forms.Padding(5);

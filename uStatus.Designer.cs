@@ -130,9 +130,9 @@
             this.cbAddYoutube.ForeColor = System.Drawing.Color.White;
             this.cbAddYoutube.Location = new System.Drawing.Point(99, 18);
             this.cbAddYoutube.Name = "cbAddYoutube";
-            this.cbAddYoutube.Size = new System.Drawing.Size(68, 17);
+            this.cbAddYoutube.Size = new System.Drawing.Size(70, 17);
             this.cbAddYoutube.TabIndex = 2;
-            this.cbAddYoutube.Text = "Youtube";
+            this.cbAddYoutube.Text = "YouTube";
             this.cbAddYoutube.UseVisualStyleBackColor = false;
             // 
             // bCopy
@@ -216,13 +216,13 @@
             // 
             // lTitle
             // 
-            this.lTitle.AutoSize = true;
+            this.lTitle.AutoEllipsis = true;
             this.lTitle.BackColor = System.Drawing.Color.Transparent;
             this.lTitle.Font = new System.Drawing.Font("Malgun Gothic", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.lTitle.ForeColor = System.Drawing.Color.White;
-            this.lTitle.Location = new System.Drawing.Point(7, 25);
+            this.lTitle.Location = new System.Drawing.Point(5, 25);
             this.lTitle.Name = "lTitle";
-            this.lTitle.Size = new System.Drawing.Size(126, 25);
+            this.lTitle.Size = new System.Drawing.Size(327, 25);
             this.lTitle.TabIndex = 0;
             this.lTitle.Text = "Now Stopped";
             // 

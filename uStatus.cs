@@ -10,7 +10,7 @@ namespace uStatus
 {
     public partial class uStatus : Form
     {
-        private const int STUFF_FLOW_SIZE = 275;
+        private const int STUFF_FLOW_SIZE = 335;
         private iTunesApp iTunes;
         private bool RightLeft = true;
 
@@ -59,7 +59,7 @@ namespace uStatus
                     // 곡 제목이 넘쳤을 경우에 흘러가는 효과 주긔
                     if (lTitle.Width > STUFF_FLOW_SIZE)
                     {
-                        tiRatioView.Start();
+                        //tiRatioView.Start();
                     }
                     else
                     {
@@ -133,6 +133,8 @@ namespace uStatus
                     }
                 }
 
+                nowplaying += " w/ @uStatusApp";
+
                 return nowplaying;
             }
             return null;
@@ -184,7 +186,7 @@ namespace uStatus
             if (lTitle.Width > STUFF_FLOW_SIZE)
             {
                 if (lTitle.Location.X == STUFF_FLOW_SIZE - lTitle.Width) RightLeft = false;
-                else if (lTitle.Location.X == 15) RightLeft = true;
+                else if (lTitle.Location.X > 5) RightLeft = true;
 
                 if (RightLeft)
                     lTitle.Location = new Point(lTitle.Location.X - 1, lTitle.Location.Y);
