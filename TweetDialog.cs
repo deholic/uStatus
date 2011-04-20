@@ -69,5 +69,10 @@ namespace uStatus
 
             od = new OAuthDialog();
         }
+
+        private void tbCustomMessage_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape) this.Close();
+        }
     }
 }

@@ -15,6 +15,7 @@ namespace uStatus
         private iTunesApp iTunes;
         private bool RightLeft = true;
         private uSMusic iTunesData;
+        
 
         public uStatus()
         {
@@ -62,10 +63,14 @@ namespace uStatus
                     */
                     #endregion
                     
-                    this.Invoke(new MethodInvoker(() => lArtist.Text = iTunesData.TrackArtist));
-                    this.Invoke(new MethodInvoker(() => lTitle.Text = iTunesData.TrackTitle));
-                    this.Invoke(new MethodInvoker(() => cbStarPoint.SelectedIndex = iTunesData.TrackRating / 20));
-                    
+                    this.Invoke(new MethodInvoker(() => {
+                        lArtist.Text = iTunesData.TrackArtist;
+                        lTitle.Text = iTunesData.TrackTitle;
+                        nIcon.BalloonTipText = iTunesData.TrackArtist + " - " + iTunesData.TrackTitle;
+                        cbStarPoint.SelectedIndex = iTunesData.TrackRating / 20;
+                    }));
+
+                    nIcon.ShowBalloonTip(500);
                     bPlay.Text = "■";
                     bCopy.Enabled = true;
                 }
@@ -192,6 +197,7 @@ namespace uStatus
         {
             FirstLoad();
             tiProgressbar.Start();
+            
         }
         private void iTunesTwit_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -214,10 +220,48 @@ namespace uStatus
             TweetDialog td = new TweetDialog(iTunesData.CreateNowPlayingString(cbAddYoutube.Checked));
             td.ShowDialog();
         }
-
         private void cbStarPoint_SelectionChangeCommitted(object sender, EventArgs e)
         {
             iTunesData.TrackRating = cbStarPoint.SelectedIndex;
+        }
+        private void uStatus_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.A:
+                case Keys.P:
+                    iTunesData.PrevTrack();
+                    break;
+                case Keys.D:
+                case Keys.N:
+                    iTunesData.NextTrack();
+                    break;
+                case Keys.W:
+                    if(cbStarPoint.SelectedIndex < 5) cbStarPoint.SelectedIndex++;
+                    break;
+                case Keys.S:
+                    if (cbStarPoint.SelectedIndex > 0) cbStarPoint.SelectedIndex--;
+                    break;
+                case Keys.T:
+                    bCopy_Click_1(null, null);
+                    break;
+                case Keys.Y:
+                    cbAddYoutube.Checked = !cbAddYoutube.Checked;
+                    break;
+                case Keys.U:
+                    cbAlwaysTop_Click(null, null);
+                    cbAlwaysTop.Checked = this.TopMost;
+                    break;
+            }
+        }
+
+        private void nIcon_BalloonTipClicked(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                this.Show();
+                WindowState = FormWindowState.Normal;
+            }
         }
     }
 }

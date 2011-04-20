@@ -78,6 +78,7 @@
             this.lSongInfo.Name = "lSongInfo";
             this.lSongInfo.Size = new System.Drawing.Size(324, 40);
             this.lSongInfo.TabIndex = 1;
+            this.lSongInfo.UseMnemonic = false;
             // 
             // label1
             // 
@@ -132,6 +133,7 @@
             this.tbCustomMessage.TabIndex = 1;
             this.tbCustomMessage.Text = "# ";
             this.tbCustomMessage.TextChanged += new System.EventHandler(this.tbCustomMessage_TextChanged);
+            this.tbCustomMessage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbCustomMessage_KeyDown);
             // 
             // label3
             // 
@@ -151,6 +153,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Font = new System.Drawing.Font("Malgun Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.KeyPreview = true;
             this.Name = "TweetDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.TweetDialog_Load);

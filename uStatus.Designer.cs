@@ -47,6 +47,7 @@
             this.lTitle = new System.Windows.Forms.Label();
             this.lArtist = new System.Windows.Forms.Label();
             this.pProgressBg = new System.Windows.Forms.Panel();
+            this.nIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -241,6 +242,7 @@
             this.lTitle.Size = new System.Drawing.Size(327, 25);
             this.lTitle.TabIndex = 0;
             this.lTitle.Text = "Now Stopped";
+            this.lTitle.UseMnemonic = false;
             // 
             // lArtist
             // 
@@ -253,6 +255,7 @@
             this.lArtist.Size = new System.Drawing.Size(57, 15);
             this.lArtist.TabIndex = 0;
             this.lArtist.Text = "iTunes is";
+            this.lArtist.UseMnemonic = false;
             // 
             // pProgressBg
             // 
@@ -265,6 +268,14 @@
             this.pProgressBg.Size = new System.Drawing.Size(344, 10);
             this.pProgressBg.TabIndex = 3;
             // 
+            // nIcon
+            // 
+            this.nIcon.BalloonTipTitle = "Now Playing     ";
+            this.nIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("nIcon.Icon")));
+            this.nIcon.Text = "uStatus";
+            this.nIcon.Visible = true;
+            this.nIcon.BalloonTipClicked += new System.EventHandler(this.nIcon_BalloonTipClicked);
+            // 
             // uStatus
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -272,11 +283,13 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.MaximizeBox = false;
             this.Name = "uStatus";
             this.Text = "uStatus";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.iTunesTwit_FormClosing);
             this.Load += new System.EventHandler(this.iTunesTwit_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.uStatus_KeyDown);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
@@ -307,6 +320,7 @@
         private System.Windows.Forms.Label lArtist;
         private System.Windows.Forms.Panel pProgressBg;
         private System.Windows.Forms.ComboBox cbStarPoint;
+        private System.Windows.Forms.NotifyIcon nIcon;
     }
 }
 

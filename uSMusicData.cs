@@ -60,7 +60,11 @@ namespace uStatus
 
         public void CrawlStart()
         {
-            if (iTunes == null) iTunes = new iTunesApp();
+            if (iTunes == null)
+            {
+                iTunes = new iTunesApp();
+            }
+
             iTunes.Play();
 
             iTunesDataCrawler = new Thread(this.Crawl);
@@ -160,8 +164,11 @@ namespace uStatus
                 byte[] buf = new byte[4096];
                 StringBuilder sb = new StringBuilder();
 
+                string artist = System.Web.HttpUtility.UrlEncode(pArtist);
+                string title = System.Web.HttpUtility.UrlEncode(pTitle);
+
                 HttpWebRequest request =
-                    (HttpWebRequest)WebRequest.Create("http://tln.kr/?mode=shorten&link=http://youtube.com/results?search_query=" + iTunes.CurrentTrack.Artist + " " + iTunes.CurrentTrack.Name);
+                    (HttpWebRequest)WebRequest.Create("http://tln.kr/?mode=shorten&link=http://youtube.com/results?search_query=" + artist + " " + title);
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                 Stream resStream = response.GetResponseStream();
 
